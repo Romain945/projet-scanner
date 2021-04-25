@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SDD.Events;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : SimpleGameStateObserver, IEventHandler
 {
     [Tooltip("Player move speed")]
     [SerializeField] float m_MoveSpeed;
@@ -13,8 +14,9 @@ public class PlayerMovement : MonoBehaviour
     Transform m_Transform;
     Rigidbody m_Rigidbody;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         m_Transform = GetComponent<Transform>();
         m_Rigidbody = GetComponent<Rigidbody>();
     }
@@ -33,5 +35,9 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody.position = m_SpawnPoint.position;
         m_Rigidbody.velocity = Vector3.zero;
         m_Rigidbody.angularVelocity = Vector3.zero;
+    }
+    protected override void GameMenu(GameMenuEvent e)
+    {
+        Reset();
     }
 }

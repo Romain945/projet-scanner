@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SDD.Events;
 
-public class PlayerRotation : MonoBehaviour
+public class PlayerRotation : SimpleGameStateObserver, IEventHandler
 {
     [Tooltip("Player Transform for horizontal rotation")]
     [SerializeField] Transform m_PlayerTransform;
@@ -10,16 +11,17 @@ public class PlayerRotation : MonoBehaviour
     Transform m_Transform;
 
     float xRotation = 0f;
-    [SerializeField] float m_MouseSensitivity;
+    float m_MouseSensitivity = 0f;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         m_Transform = GetComponent<Transform>();
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void FixedUpdate()
     {
+        if (GameManager.Instance && !GameManager.Instance.IsPlaying) return; // GameState.play
 
         float mouseY = Input.GetAxis("Mouse Y") * m_MouseSensitivity * Time.deltaTime;
         float mouseX = Input.GetAxis("Mouse X") * m_MouseSensitivity * Time.deltaTime;
@@ -31,10 +33,21 @@ public class PlayerRotation : MonoBehaviour
         m_PlayerTransform.Rotate(Vector3.up * mouseX); // Rotation du joueur a l'horizontale seulement (pour les déplacements)
     }
 
+    #region Callbacks to SettingsManager events
+    protected override void GameSettingsChanged(GameSettingsChangedEvent e)
+    {
+        m_MouseSensitivity = e.eSensitivity;
+    }
+    #endregion
+
     void Reset()
     {
         xRotation = 0f;
         m_Transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f); // Rotation de la tête horizontale et verticale
         m_PlayerTransform.rotation = Quaternion.identity; // Rotation du joueur a l'horizontale seulement (pour les déplacements)
+    }
+    protected override void GameMenu(GameMenuEvent e)
+    {
+        Reset();
     }
 }
