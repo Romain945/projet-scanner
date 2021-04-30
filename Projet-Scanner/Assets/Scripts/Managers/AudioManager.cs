@@ -25,6 +25,7 @@ public class AudioManager : Manager<AudioManager>
 		base.SubscribeEvents();
 
         //MainMenuManager
+        EventManager.Instance.AddListener<SettingsButtonClickedEvent>(SettingsButtonClicked);
         EventManager.Instance.AddListener<SaveSettingsButtonClickedEvent>(SaveSettingsButtonClicked);
         EventManager.Instance.AddListener<CloseSettingsButtonClickedEvent>(CloseSettingsButtonClicked);
 
@@ -36,6 +37,7 @@ public class AudioManager : Manager<AudioManager>
 		base.UnsubscribeEvents();
 
         //MainMenuManager
+        EventManager.Instance.RemoveListener<SettingsButtonClickedEvent>(SettingsButtonClicked);
         EventManager.Instance.RemoveListener<SaveSettingsButtonClickedEvent>(SaveSettingsButtonClicked);
         EventManager.Instance.RemoveListener<CloseSettingsButtonClickedEvent>(CloseSettingsButtonClicked);
 
@@ -83,6 +85,11 @@ public class AudioManager : Manager<AudioManager>
     #endregion
 
     #region Callbacks to MenuManager events
+    void SettingsButtonClicked(SettingsButtonClickedEvent e)
+    {
+        m_ClickSound.Play();
+    }
+
     void SaveSettingsButtonClicked(SaveSettingsButtonClickedEvent e)
     {
         m_ClickSound.Play();

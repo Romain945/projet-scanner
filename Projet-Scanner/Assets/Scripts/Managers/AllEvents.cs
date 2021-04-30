@@ -27,7 +27,7 @@ public class GameStatisticsChangedEvent : SDD.Events.Event
 }
 public class GameSettingsChangedEvent : SDD.Events.Event
 {
-	public float eSensitivity { get; set; }
+	public float eMouseSensitivity { get; set; }
 }
 #endregion
 
@@ -42,6 +42,9 @@ public class ResumeButtonClickedEvent : SDD.Events.Event
 {
 }
 public class SaveSettingsButtonClickedEvent : SDD.Events.Event
+{
+}
+public class SettingsButtonClickedEvent : SDD.Events.Event
 {
 }
 public class CloseSettingsButtonClickedEvent : SDD.Events.Event

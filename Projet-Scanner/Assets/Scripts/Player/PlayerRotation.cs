@@ -36,7 +36,7 @@ public class PlayerRotation : SimpleGameStateObserver, IEventHandler
     #region Callbacks to SettingsManager events
     protected override void GameSettingsChanged(GameSettingsChangedEvent e)
     {
-        m_MouseSensitivity = e.eSensitivity;
+        m_MouseSensitivity = e.eMouseSensitivity;
     }
     #endregion
 

@@ -17,6 +17,12 @@ public class MenuManager : Manager<MenuManager>
 
     List<GameObject> m_AllPanels;
 
+    [Header("Sensitivity Slider")]
+    [SerializeField] Slider m_MouseSensitivitySlider;
+    [SerializeField] Text m_MouseSensitivityValueText;
+
+    float m_MouseSensitivity;
+
     [Header("Labels")]
     [SerializeField] Text[] m_ScoreValueText;
     #endregion
@@ -105,6 +111,14 @@ public class MenuManager : Manager<MenuManager>
         for (int i = 0; i < m_ScoreValueText.Length; i++)
             m_ScoreValueText[i].text = GameManager.Instance.Score.ToString();
     }
+
+    protected override void GameSettingsChanged(GameSettingsChangedEvent e)
+    {
+        m_MouseSensitivity = e.eMouseSensitivity;
+
+        m_MouseSensitivitySlider.value = m_MouseSensitivity;
+        m_MouseSensitivityValueText.text = m_MouseSensitivity.ToString();
+    }
     #endregion
 
     #region UI OnClick Events
@@ -126,17 +140,21 @@ public class MenuManager : Manager<MenuManager>
     public void SettingsButtonHasBeenClicked()
     {
         m_SettingsPanel.SetActive(true);
+        EventManager.Instance.Raise(new SettingsButtonClickedEvent());
     }
 
     public void SaveSettingsButtonHasBeenClicked()
     {
         m_SettingsPanel.SetActive(false);
+        EventManager.Instance.Raise(new GameSettingsChangedEvent() { eMouseSensitivity = m_MouseSensitivitySlider.value });
         EventManager.Instance.Raise(new SaveSettingsButtonClickedEvent());
     }
 
     public void CloseSettingsButtonHasBeenClicked()
     {
         m_SettingsPanel.SetActive(false);
+        m_MouseSensitivitySlider.value = m_MouseSensitivity;
+        m_MouseSensitivityValueText.text = m_MouseSensitivity.ToString();
         EventManager.Instance.Raise(new CloseSettingsButtonClickedEvent());
     }
 
@@ -148,6 +166,13 @@ public class MenuManager : Manager<MenuManager>
     public void CloseTheGameButtonHasBeenClicked()
     {
         Application.Quit();
+    }
+    #endregion
+
+    #region UI Slider OnChange Events
+    public void MouseSensitivitySliderValueHasBeenChanged()
+    {
+        m_MouseSensitivityValueText.text = m_MouseSensitivitySlider.value.ToString();
     }
     #endregion
 }
