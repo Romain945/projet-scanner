@@ -66,9 +66,18 @@ public class GameManager : Manager<GameManager>
         //LevelsManager
         EventManager.Instance.AddListener<LevelHasBeenInstantiatedEvent>(LevelHasBeenInstantiated);
 
+        //Levels
+        EventManager.Instance.AddListener<LastObjectHasBeenDestroyEvent>(LastObjectHasBeenDestroy);
+
+        //HudManager
+        EventManager.Instance.AddListener<TimeIsUpEvent>(TimeIsUp);
+
         //Animation
         EventManager.Instance.AddListener<PanelFadeInIsCompleteEvent>(PanelFadeInIsComplete);
         EventManager.Instance.AddListener<PanelFadeOutIsCompleteEvent>(PanelFadeOutIsComplete);
+
+        //Player
+        EventManager.Instance.AddListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
     }
     public override void UnsubscribeEvents()
     {
@@ -83,9 +92,18 @@ public class GameManager : Manager<GameManager>
         //LevelsManager
         EventManager.Instance.RemoveListener<LevelHasBeenInstantiatedEvent>(LevelHasBeenInstantiated);
 
+        //Levels
+        EventManager.Instance.RemoveListener<LastObjectHasBeenDestroyEvent>(LastObjectHasBeenDestroy);
+
+        //HudManager
+        EventManager.Instance.RemoveListener<TimeIsUpEvent>(TimeIsUp);
+
         //Animation
         EventManager.Instance.RemoveListener<PanelFadeInIsCompleteEvent>(PanelFadeInIsComplete);
         EventManager.Instance.RemoveListener<PanelFadeOutIsCompleteEvent>(PanelFadeOutIsComplete);
+
+        //Player
+        EventManager.Instance.RemoveListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
     }
     #endregion
 
@@ -116,6 +134,22 @@ public class GameManager : Manager<GameManager>
     }
     #endregion
 
+    #region Callbacks to events issued by Level
+    void LastObjectHasBeenDestroy (LastObjectHasBeenDestroyEvent e)
+    {
+        m_GameState = GameState.levelComplete;
+        EventManager.Instance.Raise(new CallFadeInAnimationPanelEvent());
+    }
+    #endregion
+
+    #region Callbacks to events issued by HudManager
+    void TimeIsUp (TimeIsUpEvent e)
+    {
+        m_GameState = GameState.gameOver;
+        EventManager.Instance.Raise(new CallFadeInAnimationPanelEvent());
+    }
+    #endregion
+
     #region Callbacks to Events issued by MenuManager
     void MainMenuButtonClicked(MainMenuButtonClickedEvent e)
     {
@@ -135,6 +169,13 @@ public class GameManager : Manager<GameManager>
     {
         if (IsPlaying)
             Pause();
+    }
+    #endregion
+
+    #region Callbacks to Events issued by PlayerManager
+    void ObjectHasBeenDestroy (ObjectHasBeenDestroyEvent e)
+    {
+        IncrementScore(1);
     }
     #endregion
 

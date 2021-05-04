@@ -10,6 +10,7 @@ public class AudioManager : Manager<AudioManager>
 	[SerializeField] AudioSource m_MenuMusic;
 	[SerializeField] AudioSource m_LevelMusic;
     [SerializeField] AudioSource m_ClickSound;
+    [SerializeField] AudioSource m_PickupSound;
     #endregion
 
     #region Manager implementation
@@ -31,6 +32,9 @@ public class AudioManager : Manager<AudioManager>
 
         //Animation
         EventManager.Instance.AddListener<CallFadeInAnimationPanelEvent>(CallFadeInAnimationPanel);
+
+        //Player
+        EventManager.Instance.AddListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
     }
 	public override void UnsubscribeEvents()
 	{
@@ -43,6 +47,9 @@ public class AudioManager : Manager<AudioManager>
 
         //Animation
         EventManager.Instance.RemoveListener<CallFadeInAnimationPanelEvent>(CallFadeInAnimationPanel);
+
+        //Player
+        EventManager.Instance.RemoveListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
     }
     #endregion
 
@@ -98,6 +105,13 @@ public class AudioManager : Manager<AudioManager>
     void CloseSettingsButtonClicked(CloseSettingsButtonClickedEvent e)
     {
         m_ClickSound.Play();
+    }
+    #endregion
+
+    #region Callbacks to Player events
+    void ObjectHasBeenDestroy(ObjectHasBeenDestroyEvent e)
+    {
+        m_PickupSound.Play();
     }
     #endregion
 
