@@ -1051,7 +1051,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3174ace299f2b4c80baf44a6283329cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachRange: 1.8
 --- !u!114 &114000010425294980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1986,9 +1985,7 @@ GameObject:
   - component: {fileID: 4000012047744974}
   - component: {fileID: 65000010980420622}
   - component: {fileID: 95000010748612786}
-  - component: {fileID: 114000011474539018}
-  - component: {fileID: 114000011125610996}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: PFB_DoorDouble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2042,32 +2039,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114000011474539018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000010728641318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3174ace299f2b4c80baf44a6283329cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reachRange: 1.8
---- !u!114 &114000011125610996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000010728641318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e617ac95c55644f938929ee87c74b211, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectNumber: 1
 --- !u!1 &1000010757183540
 GameObject:
   m_ObjectHideFlags: 0
@@ -3171,7 +3142,7 @@ GameObject:
   - component: {fileID: 33000012029462924}
   - component: {fileID: 23000013824236564}
   - component: {fileID: 65000011418239746}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: rightDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3491,7 +3462,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3174ace299f2b4c80baf44a6283329cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachRange: 1.8
 --- !u!1 &1000011015371202
 GameObject:
   m_ObjectHideFlags: 0
@@ -3571,7 +3541,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3174ace299f2b4c80baf44a6283329cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachRange: 1.8
 --- !u!1 &1000011019590156
 GameObject:
   m_ObjectHideFlags: 0
@@ -3792,7 +3761,7 @@ GameObject:
   - component: {fileID: 4000013852181802}
   - component: {fileID: 65000010969523914}
   - component: {fileID: 114000010652553870}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: grp_doorsL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5197,7 +5166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000014115061860}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: DoorDouble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6285,7 +6254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3174ace299f2b4c80baf44a6283329cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachRange: 1.9
 --- !u!1 &1000012101761340
 GameObject:
   m_ObjectHideFlags: 0
@@ -6651,7 +6619,7 @@ GameObject:
   - component: {fileID: 4000010467294132}
   - component: {fileID: 65000011006399184}
   - component: {fileID: 114000013040493200}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: 'doorR_interact '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7695,7 +7663,7 @@ GameObject:
   - component: {fileID: 4000010046148438}
   - component: {fileID: 65000011122844968}
   - component: {fileID: 114000011222558182}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: grp_doorsR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7835,7 +7803,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3174ace299f2b4c80baf44a6283329cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachRange: 1.8
 --- !u!1 &1000012615259678
 GameObject:
   m_ObjectHideFlags: 0
@@ -7927,7 +7894,7 @@ GameObject:
   - component: {fileID: 4000012449451280}
   - component: {fileID: 65000012706872668}
   - component: {fileID: 114000012606080732}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: doorL_interact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9180,7 +9147,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3174ace299f2b4c80baf44a6283329cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachRange: 1.8
 --- !u!65 &65000011400627782
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9648,7 +9614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3174ace299f2b4c80baf44a6283329cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachRange: 1.8
 --- !u!64 &64000013736877972
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -9755,7 +9720,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3174ace299f2b4c80baf44a6283329cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachRange: 1.8
 --- !u!1 &1000013502178602
 GameObject:
   m_ObjectHideFlags: 0
@@ -10154,7 +10118,7 @@ GameObject:
   - component: {fileID: 33000011275152242}
   - component: {fileID: 23000012146042990}
   - component: {fileID: 64000013251121730}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tvStandDoor_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10352,7 +10316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3174ace299f2b4c80baf44a6283329cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachRange: 1.8
 --- !u!1 &1000013634868504
 GameObject:
   m_ObjectHideFlags: 0
@@ -10726,7 +10689,7 @@ GameObject:
   - component: {fileID: 33000014041980008}
   - component: {fileID: 23000012603823662}
   - component: {fileID: 65000012228145584}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: leftDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10740,13 +10703,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000013855488504}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.83840954, y: 1.250006, z: 0.00000061035155}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: -0.809, y: 1.250006, z: 0.023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4000014115061860}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!33 &33000014041980008
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -11280,7 +11243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3174ace299f2b4c80baf44a6283329cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachRange: 1.8
 --- !u!95 &95000012470866046
 Animator:
   serializedVersion: 3
@@ -11544,7 +11506,7 @@ GameObject:
   - component: {fileID: 33000011541706286}
   - component: {fileID: 23000011989814432}
   - component: {fileID: 64000013235891536}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tvStandDoor_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}

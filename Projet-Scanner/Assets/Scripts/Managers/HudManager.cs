@@ -8,10 +8,10 @@ public class HudManager : Manager<HudManager>
 {
 	[Header("Texts")]
 	[SerializeField] Text m_ScoreValueText;
-	[SerializeField] Text m_PickupText;
 
 	[Header("Timer")]
 	[SerializeField] Text m_TimerValue;
+
 	float m_Timer = 0f;
 	float m_TimeBeforeGameOver;
 
@@ -29,11 +29,6 @@ public class HudManager : Manager<HudManager>
 
 		//LevelsManager
 		EventManager.Instance.AddListener<LevelHasBeenInstantiatedEvent>(LevelHasBeenInstantiated);
-
-		EventManager.Instance.AddListener<CanPickupAnObjectEvent>(CanPickupAnObject);
-		EventManager.Instance.AddListener<CantPickupAnObjectEvent>(CantPickupAnObject);
-
-		EventManager.Instance.AddListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
 	}
 	public override void UnsubscribeEvents()
 	{
@@ -41,11 +36,6 @@ public class HudManager : Manager<HudManager>
 
 		//LevelsManager
 		EventManager.Instance.RemoveListener<LevelHasBeenInstantiatedEvent>(LevelHasBeenInstantiated);
-
-		EventManager.Instance.RemoveListener<CanPickupAnObjectEvent>(CanPickupAnObject);
-		EventManager.Instance.RemoveListener<CantPickupAnObjectEvent>(CantPickupAnObject);
-
-		EventManager.Instance.RemoveListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
 	}
 	#endregion
 
@@ -56,23 +46,8 @@ public class HudManager : Manager<HudManager>
 	}
 	void LevelHasBeenInstantiated(LevelHasBeenInstantiatedEvent e)
     {
-		m_TimeBeforeGameOver = e.eLevel.TimeBeforeGameOver;
+		m_TimeBeforeGameOver = e.eLevel.GameOver;
     }
-	#endregion
-
-	#region Callbacks to Pickup events
-	void CanPickupAnObject(CanPickupAnObjectEvent e)
-	{
-		m_PickupText.enabled = true;
-	}
-	void CantPickupAnObject(CantPickupAnObjectEvent e)
-	{
-		m_PickupText.enabled = false;
-	}
-	void ObjectHasBeenDestroy(ObjectHasBeenDestroyEvent e)
-	{
-		m_PickupText.enabled = false;
-	}
 	#endregion
 
 	void Update()
@@ -86,10 +61,8 @@ public class HudManager : Manager<HudManager>
 			EventManager.Instance.Raise(new TimeIsUpEvent());
 	}
 
-
     void Reset()
 	{
-		m_PickupText.enabled = false;
 		m_Timer = 0;
 		m_TimerValue.text = string.Format("{0:0.00}", m_Timer);
 

@@ -11,6 +11,8 @@ public class AudioManager : Manager<AudioManager>
 	[SerializeField] AudioSource m_LevelMusic;
     [SerializeField] AudioSource m_ClickSound;
     [SerializeField] AudioSource m_PickupSound;
+    [SerializeField] AudioSource m_OpenDoorSound;
+    [SerializeField] AudioSource m_CloseDoorSound;
     #endregion
 
     #region Manager implementation
@@ -33,8 +35,12 @@ public class AudioManager : Manager<AudioManager>
         //Animation
         EventManager.Instance.AddListener<CallFadeInAnimationPanelEvent>(CallFadeInAnimationPanel);
 
-        //Player
+        //PickupObject
         EventManager.Instance.AddListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
+
+        //PickupObject
+        EventManager.Instance.AddListener<DoorHasBeenOpenEvent>(DoorHasBeenOpen);
+        EventManager.Instance.AddListener<DoorHasBeenCloseEvent>(DoorHasBeenClose);
     }
 	public override void UnsubscribeEvents()
 	{
@@ -50,6 +56,10 @@ public class AudioManager : Manager<AudioManager>
 
         //Player
         EventManager.Instance.RemoveListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
+
+        //PickupObject
+        EventManager.Instance.RemoveListener<DoorHasBeenOpenEvent>(DoorHasBeenOpen);
+        EventManager.Instance.RemoveListener<DoorHasBeenCloseEvent>(DoorHasBeenClose);
     }
     #endregion
 
@@ -108,10 +118,21 @@ public class AudioManager : Manager<AudioManager>
     }
     #endregion
 
-    #region Callbacks to Player events
+    #region Callbacks to PickupObject events
     void ObjectHasBeenDestroy(ObjectHasBeenDestroyEvent e)
     {
         m_PickupSound.Play();
+    }
+    #endregion
+
+    #region Callbacks to MoveObjectController events
+    void DoorHasBeenOpen(DoorHasBeenOpenEvent e)
+    {
+        m_OpenDoorSound.Play();
+    }
+    void DoorHasBeenClose(DoorHasBeenCloseEvent e)
+    {
+        m_CloseDoorSound.Play();
     }
     #endregion
 

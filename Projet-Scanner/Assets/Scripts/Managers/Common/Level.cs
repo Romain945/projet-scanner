@@ -8,23 +8,22 @@ public class Level : MonoBehaviour, IEventHandler
 {
 	List<PickupObject> m_ObjectInLevel = new List<PickupObject>();
 
-	[SerializeField] float m_TimeBeforeGameOver;
-	public float TimeBeforeGameOver { get { return m_TimeBeforeGameOver; } }
+	[Header ("Time Before")]
+	[SerializeField] float m_GameOver;
+	public float GameOver { get { return m_GameOver; } }
+	[SerializeField] float m_BlinkingLight;
+	bool m_IsBlinking;
+
+	float m_Timer = 0;
 
 	#region Events' subscription
 	public void SubscribeEvents()
 	{
-		//Level
-		EventManager.Instance.AddListener<LevelHasBeenInstantiatedEvent>(LevelHasBeenInstantiated);
-
 		//Player
 		EventManager.Instance.AddListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
 	}
 	public void UnsubscribeEvents()
 	{
-		//Level
-		EventManager.Instance.RemoveListener<LevelHasBeenInstantiatedEvent>(LevelHasBeenInstantiated);
-
 		//Player
 		EventManager.Instance.RemoveListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
 	}
@@ -38,8 +37,8 @@ public class Level : MonoBehaviour, IEventHandler
 	}
 	#endregion
 
-	void LevelHasBeenInstantiated(LevelHasBeenInstantiatedEvent e)
-	{
+	void Start()
+    {
 		m_ObjectInLevel = FindObjectsOfType<PickupObject>().ToList();
 	}
 
@@ -48,5 +47,18 @@ public class Level : MonoBehaviour, IEventHandler
 		m_ObjectInLevel.Remove(e.ePickupObject.GetComponent<PickupObject>());
 		if (m_ObjectInLevel.Count <= 0)
 			EventManager.Instance.Raise(new LastObjectHasBeenDestroyEvent());
+	}
+
+	void Update()
+    {
+		if (GameManager.Instance && !GameManager.Instance.IsPlaying) return; // GameState.play
+
+		m_Timer += Time.deltaTime;
+
+		if (m_Timer >= m_BlinkingLight)
+			m_IsBlinking = true;
+
+		//if(m_IsBlinking)
+
 	}
 }

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SDD.Events;
 
 public class MoveObjectController : MonoBehaviour 
 {
-	public float reachRange = 1.8f;			
+	float m_reachRange = 1.1f;			
 
 	private Animator anim;
 	private Camera fpsCam;
@@ -23,8 +24,8 @@ public class MoveObjectController : MonoBehaviour
 	{
 		//Initialize moveDrawController if script is enabled.
 		player = GameObject.FindGameObjectWithTag("Player");
-
 		fpsCam = Camera.main;
+
 		if (fpsCam == null)	//a reference to Camera is required for rayasts
 		{
 			Debug.LogError("A camera tagged 'MainCamera' is missing.");
@@ -67,14 +68,13 @@ public class MoveObjectController : MonoBehaviour
 	void Update()
 	{		
 		if (playerEntered)
-		{	
-
+		{
 			//center point of viewport in World space.
 			Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f,0.5f,0f));
 			RaycastHit hit;
 
 			//if raycast hits a collider on the rayLayerMask
-			if (Physics.Raycast(rayOrigin,fpsCam.transform.forward, out hit,reachRange,rayLayerMask))
+			if (Physics.Raycast(rayOrigin,fpsCam.transform.forward, out hit, m_reachRange, rayLayerMask))
 			{
 				MoveableObject moveableObject = null;
 				//is the object of the collider player is looking at the same as me?
@@ -91,8 +91,13 @@ public class MoveObjectController : MonoBehaviour
 					bool isOpen = anim.GetBool(animBoolNameNum);	//need current state for message.
 					msg = getGuiMsg(isOpen);
 
-					if (Input.GetKeyUp(KeyCode.E) || Input.GetButtonDown("Fire1"))
+					if (Input.GetKeyUp(KeyCode.E))
 					{
+						if(!isOpen)
+							EventManager.Instance.Raise(new DoorHasBeenOpenEvent());
+						else
+							EventManager.Instance.Raise(new DoorHasBeenCloseEvent());
+
 						anim.enabled = true;
 						anim.SetBool(animBoolNameNum,!isOpen);
 						msg = getGuiMsg(!isOpen);
@@ -146,7 +151,6 @@ public class MoveObjectController : MonoBehaviour
 		
 
 	#region GUI Config
-
 	//configure the style of the GUI
 	private void setupGui()
 	{
@@ -154,7 +158,7 @@ public class MoveObjectController : MonoBehaviour
 		guiStyle.fontSize = 16;
 		guiStyle.fontStyle = FontStyle.Bold;
 		guiStyle.normal.textColor = Color.white;
-		msg = "Press E/Fire1 to Open";
+		msg = "Press E to Open";
 	}
 
 	private string getGuiMsg(bool isOpen)
@@ -162,10 +166,10 @@ public class MoveObjectController : MonoBehaviour
 		string rtnVal;
 		if (isOpen)
 		{
-			rtnVal = "Press E/Fire1 to Close";
+			rtnVal = "Press E to Close";
 		}else
 		{
-			rtnVal = "Press E/Fire1 to Open";
+			rtnVal = "Press E to Open";
 		}
 
 		return rtnVal;

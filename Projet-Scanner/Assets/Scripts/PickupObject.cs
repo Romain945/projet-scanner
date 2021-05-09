@@ -5,9 +5,7 @@ using SDD.Events;
 
 public class PickupObject : MonoBehaviour, IEventHandler
 {
-    Transform m_PlayerTransform;
-
-    bool m_CanPickUpObject;
+    GameObject m_PlayerGO;
 
 	#region Events' subscription
 	public void SubscribeEvents()
@@ -33,26 +31,16 @@ public class PickupObject : MonoBehaviour, IEventHandler
     #region Callbacks to levelManager events
     void LevelHasBeenInstantiated(LevelHasBeenInstantiatedEvent e)
     {
-        m_PlayerTransform = e.ePlayerTransform;
-    }
-    #endregion
+		m_PlayerGO = GameObject.FindGameObjectWithTag("Player");
+	}
+	#endregion
 
-    void Update()
-    {
-        if (GameManager.Instance && !GameManager.Instance.IsPlaying) return; // GameState.play
-
-        if (!m_CanPickUpObject && Vector3.Distance(m_PlayerTransform.position, transform.position) <= 1)
-        {
-            m_CanPickUpObject = true;
-            EventManager.Instance.Raise(new CanPickupAnObjectEvent() { ePickupObject = gameObject});
-            return;
-        }
-
-        if (m_CanPickUpObject && Vector3.Distance(m_PlayerTransform.position, transform.position) >= 1.3)
-        {
-            m_CanPickUpObject = false;
-            EventManager.Instance.Raise(new CantPickupAnObjectEvent() { ePickupObject = gameObject });
-            return;
-        }
-    }
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject == m_PlayerGO)     //player has collided with object
+		{
+			EventManager.Instance.Raise(new ObjectHasBeenDestroyEvent() { ePickupObject = gameObject });
+			Destroy(gameObject);
+		}
+	}
 }

@@ -60,7 +60,6 @@ public class LevelHasBeenInstantiatedEvent : SDD.Events.Event
 {
 	public Level eLevel;
 	public int eLevelIndex;
-	public Transform ePlayerTransform;
 }
 #endregion
 
@@ -102,20 +101,18 @@ public class PanelFadeOutIsCompleteEvent : SDD.Events.Event
 }
 #endregion
 
-#region PickUp Object Events
-public class CanPickupAnObjectEvent : SDD.Events.Event
-{
-	public GameObject ePickupObject;
-}
-public class CantPickupAnObjectEvent : SDD.Events.Event
+#region PickupObject Events
+public class ObjectHasBeenDestroyEvent : SDD.Events.Event
 {
 	public GameObject ePickupObject;
 }
 #endregion
 
-#region Player Events
-public class ObjectHasBeenDestroyEvent : SDD.Events.Event
+#region MoveObjectController Events
+public class DoorHasBeenOpenEvent : SDD.Events.Event
 {
-	public GameObject ePickupObject;
+}
+public class DoorHasBeenCloseEvent : SDD.Events.Event
+{
 }
 #endregion

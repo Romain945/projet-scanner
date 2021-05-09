@@ -14,7 +14,6 @@ public class LevelsManager : Manager<LevelsManager>
 	Level m_CurrentLevel;
 	public Level CurrentLevel { get { return m_CurrentLevel; } }
 	public bool IsLastLevel { get { return m_CurrentLevelIndex >= m_LevelsPrefabs.Length - 1; } }
-	[SerializeField] Transform m_PlayerTransform;
 	#endregion
 
 	#region Manager implementation
@@ -61,7 +60,7 @@ public class LevelsManager : Manager<LevelsManager>
 		while (m_CurrentLevelGO) yield return null;
 
 		InstantiateLevel(m_CurrentLevelIndex);
-		EventManager.Instance.Raise(new LevelHasBeenInstantiatedEvent() { eLevel = m_CurrentLevel, eLevelIndex = m_CurrentLevelIndex, ePlayerTransform = m_PlayerTransform});
+		EventManager.Instance.Raise(new LevelHasBeenInstantiatedEvent() { eLevel = m_CurrentLevel, eLevelIndex = m_CurrentLevelIndex });
 
 	}
 	#endregion
