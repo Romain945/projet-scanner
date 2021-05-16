@@ -13,7 +13,6 @@ public class HudManager : Manager<HudManager>
 	[SerializeField] Text m_TimerValue;
 
 	float m_Timer = 0f;
-	float m_TimeBeforeGameOver;
 
 	#region Manager implementation
 	protected override IEnumerator InitCoroutine()
@@ -26,16 +25,10 @@ public class HudManager : Manager<HudManager>
 	public override void SubscribeEvents()
 	{
 		base.SubscribeEvents();
-
-		//LevelsManager
-		EventManager.Instance.AddListener<LevelHasBeenInstantiatedEvent>(LevelHasBeenInstantiated);
 	}
 	public override void UnsubscribeEvents()
 	{
 		base.UnsubscribeEvents();
-
-		//LevelsManager
-		EventManager.Instance.RemoveListener<LevelHasBeenInstantiatedEvent>(LevelHasBeenInstantiated);
 	}
 	#endregion
 
@@ -44,10 +37,6 @@ public class HudManager : Manager<HudManager>
 	{
 		m_ScoreValueText.text = e.eScore.ToString();
 	}
-	void LevelHasBeenInstantiated(LevelHasBeenInstantiatedEvent e)
-    {
-		m_TimeBeforeGameOver = e.eLevel.GameOver;
-    }
 	#endregion
 
 	void Update()
@@ -56,9 +45,6 @@ public class HudManager : Manager<HudManager>
 
 		m_TimerValue.text = string.Format("{0:0.00}", m_Timer);
 		m_Timer += Time.deltaTime;
-
-		if (m_Timer >= m_TimeBeforeGameOver)
-			EventManager.Instance.Raise(new TimeIsUpEvent());
 	}
 
     void Reset()

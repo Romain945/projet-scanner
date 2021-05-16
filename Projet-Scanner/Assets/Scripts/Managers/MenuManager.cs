@@ -14,6 +14,7 @@ public class MenuManager : Manager<MenuManager>
     [SerializeField] GameObject m_HudPanel;
     [SerializeField] GameObject m_VictoryPanel;
     [SerializeField] GameObject m_GameOverPanel;
+    [SerializeField] GameObject m_GameOverUIElements;
 
     List<GameObject> m_AllPanels;
 
@@ -107,6 +108,9 @@ public class MenuManager : Manager<MenuManager>
 
     protected override void GameOver(GameOverEvent e)
     {
+        m_GameOverUIElements.SetActive(false);
+        Time.timeScale = 1;
+        StartCoroutine(GameOverUIElementsActivator());
         OpenPanel(m_GameOverPanel);
         for (int i = 0; i < m_ScoreValueText.Length; i++)
             m_ScoreValueText[i].text = GameManager.Instance.Score.ToString();
@@ -175,4 +179,11 @@ public class MenuManager : Manager<MenuManager>
         m_MouseSensitivityValueText.text = m_MouseSensitivitySlider.value.ToString();
     }
     #endregion
+
+    IEnumerator GameOverUIElementsActivator()
+    {
+        yield return new WaitForSeconds(2);
+        m_GameOverUIElements.SetActive(true);
+        Time.timeScale = 0;
+    }
 }

@@ -14,6 +14,8 @@ public class PlayerMovement : SimpleGameStateObserver, IEventHandler
     Transform m_Transform;
     Rigidbody m_Rigidbody;
 
+    bool m_IsGrounded;
+
     #region Events subscription
     public override void SubscribeEvents()
     {
@@ -39,8 +41,24 @@ public class PlayerMovement : SimpleGameStateObserver, IEventHandler
         float hAxis = Input.GetAxis("Horizontal");
         float vAxis = Input.GetAxis("Vertical");
 
-        Vector3 movement = (m_Transform.right * hAxis + m_Transform.forward * vAxis);
-        m_Rigidbody.AddForce(movement * m_MoveSpeed, ForceMode.VelocityChange);
+        Vector3 movement = m_Transform.right * hAxis + m_Transform.forward * vAxis;
+        m_Rigidbody.velocity = movement;
+    }
+
+    void OnCollisionStay()
+    {
+        m_IsGrounded = true;
+    }
+
+    void Update()
+    {
+        if (GameManager.Instance && !GameManager.Instance.IsPlaying) return; // GameState.play
+
+        if (Input.GetKeyDown(KeyCode.Space) && m_IsGrounded)
+        {
+            m_Rigidbody.AddForce(0, 3.5f, 0, ForceMode.Impulse);
+            m_IsGrounded = false;
+        }
     }
 
     void Reset()

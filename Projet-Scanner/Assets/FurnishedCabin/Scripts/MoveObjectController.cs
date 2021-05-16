@@ -2,26 +2,43 @@
 using System.Collections;
 using SDD.Events;
 
-public class MoveObjectController : MonoBehaviour 
+public class MoveObjectController : SimpleGameStateObserver, IEventHandler
 {
 	float m_reachRange = 1.1f;			
 
-	private Animator anim;
-	private Camera fpsCam;
-	private GameObject player;
+	Animator anim;
+	Camera fpsCam;
+	GameObject player;
 
-	private const string animBoolName = "isOpen_Obj_";
+	const string animBoolName = "isOpen_Obj_";
 
-	private bool playerEntered;
-	private bool showInteractMsg;
-	private GUIStyle guiStyle;
-	private string msg;
+	bool playerEntered;
+	bool showInteractMsg;
+	GUIStyle guiStyle;
+	string msg;
 
-	private int rayLayerMask; 
+	int rayLayerMask;
+	bool m_NoMoreUI = false;
 
+	#region Events subscription
+	public override void SubscribeEvents()
+	{
+		base.SubscribeEvents();
+
+		EventManager.Instance.AddListener<TimeIsUpEvent>(TimeIsUp);
+	}
+	public override void UnsubscribeEvents()
+	{
+		base.UnsubscribeEvents();
+
+		EventManager.Instance.RemoveListener<TimeIsUpEvent>(TimeIsUp);
+	}
+	#endregion
 
 	void Start()
 	{
+		m_NoMoreUI = false;
+
 		//Initialize moveDrawController if script is enabled.
 		player = GameObject.FindGameObjectWithTag("Player");
 		fpsCam = Camera.main;
@@ -177,11 +194,15 @@ public class MoveObjectController : MonoBehaviour
 
 	void OnGUI()
 	{
-		if (showInteractMsg)  //show on-screen prompts to user for guide.
+		if (showInteractMsg && !m_NoMoreUI)  //show on-screen prompts to user for guide.
 		{
 			GUI.Label(new Rect (50,Screen.height - 50,200,50), msg,guiStyle);
 		}
-	}		
-	//End of GUI Config --------------
-	#endregion
+	}
+    //End of GUI Config --------------
+    #endregion
+	void TimeIsUp(TimeIsUpEvent e)
+    {
+		m_NoMoreUI = true;
+	}
 }

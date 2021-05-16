@@ -68,9 +68,6 @@ public class LastObjectHasBeenDestroyEvent : SDD.Events.Event
 {
 
 }
-#endregion
-
-#region HudManager Events
 public class TimeIsUpEvent : SDD.Events.Event
 {
 }
