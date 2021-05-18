@@ -8,6 +8,7 @@ public class HudManager : Manager<HudManager>
 {
 	[Header("Texts")]
 	[SerializeField] Text m_ScoreValueText;
+	[SerializeField] Text m_ScoreMaxValueText;
 
 	[Header("Timer")]
 	[SerializeField] Text m_TimerValue;
@@ -25,10 +26,16 @@ public class HudManager : Manager<HudManager>
 	public override void SubscribeEvents()
 	{
 		base.SubscribeEvents();
+
+		//LevelsManager
+		EventManager.Instance.AddListener<LevelHasBeenInstantiatedEvent>(LevelHasBeenInstantiated);
 	}
 	public override void UnsubscribeEvents()
 	{
 		base.UnsubscribeEvents();
+
+		//LevelsManager
+		EventManager.Instance.RemoveListener<LevelHasBeenInstantiatedEvent>(LevelHasBeenInstantiated);
 	}
 	#endregion
 
@@ -37,9 +44,17 @@ public class HudManager : Manager<HudManager>
 	{
 		m_ScoreValueText.text = e.eScore.ToString();
 	}
-	#endregion
+    #endregion
 
-	void Update()
+    #region Callbacks to LevelManager events
+	void LevelHasBeenInstantiated(LevelHasBeenInstantiatedEvent e)
+    {
+		m_ScoreMaxValueText.text = "/ "+e.eLevel.NumberOfObject.ToString();
+	}
+    #endregion
+
+
+    void Update()
 	{
 		if (GameManager.Instance && !GameManager.Instance.IsPlaying) return; // GameState.play
 

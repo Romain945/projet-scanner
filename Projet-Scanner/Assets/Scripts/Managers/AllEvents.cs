@@ -64,6 +64,10 @@ public class LevelHasBeenInstantiatedEvent : SDD.Events.Event
 #endregion
 
 #region Level Events
+public class HorseThirdPositionIsNowEvent : SDD.Events.Event
+{
+
+}
 public class LastObjectHasBeenDestroyEvent : SDD.Events.Event
 {
 
@@ -102,6 +106,12 @@ public class PanelFadeOutIsCompleteEvent : SDD.Events.Event
 public class ObjectHasBeenDestroyEvent : SDD.Events.Event
 {
 	public GameObject ePickupObject;
+}
+public class HorseHasBeenHitEvent : SDD.Events.Event
+{
+}
+public class HorseHasBeenDestroyEvent : SDD.Events.Event
+{
 }
 #endregion
 
