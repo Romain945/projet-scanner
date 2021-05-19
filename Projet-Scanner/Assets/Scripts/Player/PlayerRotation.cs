@@ -19,7 +19,7 @@ public class PlayerRotation : SimpleGameStateObserver, IEventHandler
         m_Transform = GetComponent<Transform>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (GameManager.Instance && !GameManager.Instance.IsPlaying) return; // GameState.play
 
