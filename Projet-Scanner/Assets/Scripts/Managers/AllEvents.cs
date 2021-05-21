@@ -75,6 +75,13 @@ public class LastObjectHasBeenDestroyEvent : SDD.Events.Event
 public class TimeIsUpEvent : SDD.Events.Event
 {
 }
+public class HorseIsMovingEvent : SDD.Events.Event
+{
+}
+public class GetAudioSourceHorrorChildEvent : SDD.Events.Event
+{
+	public AudioSource eHorrorChildAudioSource;
+}
 #endregion
 
 #region GameManager other Events

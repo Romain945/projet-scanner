@@ -70,14 +70,12 @@ public class PickupObject : MonoBehaviour, IEventHandler
     {
 		if (GameManager.Instance && !GameManager.Instance.IsPlaying) return; // GameState.play
 		if (!m_HorseIsOnThridPosition) return;
-		if (gameObject.CompareTag("Horse") && Vector3.Distance(gameObject.transform.position, m_PlayerGO.transform.position) <= 1)
+		if (!m_HorseIsHit && gameObject.CompareTag("Horse") && Vector3.Distance(gameObject.transform.position, m_PlayerGO.transform.position) <= 1)
         {
 			m_HorseIsHit = true;
 			gameObject.transform.position = m_HorseLastPosition;
 			gameObject.transform.rotation = m_HorseLastRotation;
 			EventManager.Instance.Raise(new HorseHasBeenHitEvent());
 		}
-
-
 	}
 }

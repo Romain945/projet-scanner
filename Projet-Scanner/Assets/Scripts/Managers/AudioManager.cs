@@ -11,8 +11,11 @@ public class AudioManager : Manager<AudioManager>
 	[SerializeField] AudioSource m_LevelMusic;
     [SerializeField] AudioSource m_ClickSound;
     [SerializeField] AudioSource m_PickupSound;
-    [SerializeField] AudioSource m_OpenDoorSound;
-    [SerializeField] AudioSource m_CloseDoorSound;
+    [SerializeField] AudioSource m_GameOverSound;
+    [SerializeField] AudioSource m_ChevalDestroySound;
+    [SerializeField] AudioSource m_ChevalMoveSound;
+    [SerializeField] AudioSource m_ChevalHitSound;
+    AudioSource m_HorrorChildSound;
     #endregion
 
     #region Manager implementation
@@ -37,10 +40,11 @@ public class AudioManager : Manager<AudioManager>
 
         //PickupObject
         EventManager.Instance.AddListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
+        EventManager.Instance.AddListener<HorseHasBeenHitEvent>(HorseHasBeenHit);
+        EventManager.Instance.AddListener<HorseHasBeenDestroyEvent>(HorseHasBeenDestroy);
 
-        //PickupObject
-        EventManager.Instance.AddListener<DoorHasBeenOpenEvent>(DoorHasBeenOpen);
-        EventManager.Instance.AddListener<DoorHasBeenCloseEvent>(DoorHasBeenClose);
+        EventManager.Instance.AddListener<HorseIsMovingEvent>(HorseIsMoving);
+        EventManager.Instance.AddListener<GetAudioSourceHorrorChildEvent>(GetAudioSourceHorrorChild);
     }
 	public override void UnsubscribeEvents()
 	{
@@ -54,12 +58,13 @@ public class AudioManager : Manager<AudioManager>
         //Animation
         EventManager.Instance.RemoveListener<CallFadeInAnimationPanelEvent>(CallFadeInAnimationPanel);
 
-        //Player
-        EventManager.Instance.RemoveListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
-
         //PickupObject
-        EventManager.Instance.RemoveListener<DoorHasBeenOpenEvent>(DoorHasBeenOpen);
-        EventManager.Instance.RemoveListener<DoorHasBeenCloseEvent>(DoorHasBeenClose);
+        EventManager.Instance.RemoveListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
+        EventManager.Instance.RemoveListener<HorseHasBeenHitEvent>(HorseHasBeenHit);
+        EventManager.Instance.RemoveListener<HorseHasBeenDestroyEvent>(HorseHasBeenDestroy);
+
+        EventManager.Instance.RemoveListener<HorseIsMovingEvent>(HorseIsMoving);
+        EventManager.Instance.RemoveListener<GetAudioSourceHorrorChildEvent>(GetAudioSourceHorrorChild);
     }
     #endregion
 
@@ -78,25 +83,23 @@ public class AudioManager : Manager<AudioManager>
     protected override void GamePause(GamePauseEvent e)
     {
         m_LevelMusic.Pause();
+        m_HorrorChildSound.Pause();
     }
 
     protected override void GameResume(GameResumeEvent e)
     {
         m_LevelMusic.Play();
-    }
-
-    protected override void GameVictory(GameVictoryEvent e)
-    {
-        m_LevelMusic.Play();
+        m_HorrorChildSound.Play();
     }
 
     protected override void GameOver(GameOverEvent e)
     {
-        m_LevelMusic.Play();
+        m_GameOverSound.Play();
     }
 
     void CallFadeInAnimationPanel(CallFadeInAnimationPanelEvent e)
     {
+        m_HorrorChildSound.Stop();
         StartCoroutine(StartFadeOut(m_LevelMusic));
     }
     #endregion
@@ -123,16 +126,25 @@ public class AudioManager : Manager<AudioManager>
     {
         m_PickupSound.Play();
     }
+    void HorseHasBeenHit (HorseHasBeenHitEvent e)
+    {
+        m_ChevalHitSound.Play();
+    }
+    void HorseHasBeenDestroy (HorseHasBeenDestroyEvent e)
+    {
+        m_ChevalDestroySound.Play();
+
+    }
     #endregion
 
-    #region Callbacks to MoveObjectController events
-    void DoorHasBeenOpen(DoorHasBeenOpenEvent e)
+    #region Callbacks to Level events
+    void HorseIsMoving(HorseIsMovingEvent e)
     {
-        m_OpenDoorSound.Play();
+        m_ChevalMoveSound.Play();
     }
-    void DoorHasBeenClose(DoorHasBeenCloseEvent e)
+    void GetAudioSourceHorrorChild (GetAudioSourceHorrorChildEvent e)
     {
-        m_CloseDoorSound.Play();
+        m_HorrorChildSound = e.eHorrorChildAudioSource;
     }
     #endregion
 

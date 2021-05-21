@@ -82,6 +82,7 @@ public class MenuManager : Manager<MenuManager>
     protected override void GameMenu(GameMenuEvent e)
     {
         OpenPanel(m_MainMenuPanel);
+        m_GameOverUIElements.SetActive(false);
     }
 
     protected override void GamePlay(GamePlayEvent e)

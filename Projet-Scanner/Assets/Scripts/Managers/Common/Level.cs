@@ -28,6 +28,10 @@ public class Level : MonoBehaviour, IEventHandler
 
 	float m_Timer = 0;
 
+	[Header("Sound")]
+	[SerializeField] AudioClip m_HorrorChildSound;
+	Vector3 m_HorrorChildPosition = new Vector3(-3.618f, -1.201f, 20.656f);
+
 	#region Events' subscription
 	public void SubscribeEvents()
 	{
@@ -53,6 +57,14 @@ public class Level : MonoBehaviour, IEventHandler
 		m_PlayerLight = GameObject.FindGameObjectWithTag("PlayerLight").GetComponent<Light>();
 		m_ChevalPrefab = GameObject.FindGameObjectWithTag("Horse");
 		m_InitialPlayerIntensity = m_PlayerLight.intensity;
+	}
+
+	void Start()
+	{
+		AudioSource.PlayClipAtPoint(m_HorrorChildSound, m_HorrorChildPosition, 0.1f);
+		AudioSource horrorChild = GameObject.Find("One shot audio").GetComponent<AudioSource>();
+		horrorChild.loop = true;
+		EventManager.Instance.Raise(new GetAudioSourceHorrorChildEvent() { eHorrorChildAudioSource = horrorChild });
 	}
 
 	void ObjectHasBeenDestroy(ObjectHasBeenDestroyEvent e)
@@ -107,6 +119,7 @@ public class Level : MonoBehaviour, IEventHandler
 
 		m_ChevalPrefab.transform.position = m_SecondPosition;
 		m_ChevalPrefab.transform.rotation = m_SecondRotation;
+		EventManager.Instance.Raise(new HorseIsMovingEvent());
 
 		yield return new WaitForSeconds(Random.Range(1.25f, 1.5f));
 
@@ -166,6 +179,7 @@ public class Level : MonoBehaviour, IEventHandler
 
 		m_ChevalPrefab.transform.position = m_ThirdPosition;
 		m_ChevalPrefab.transform.rotation = m_ThirdRotation;
+		EventManager.Instance.Raise(new HorseIsMovingEvent());
 		EventManager.Instance.Raise(new HorseThirdPositionIsNowEvent());
 
 		yield return new WaitForSeconds(Random.Range(1.25f, 2f));

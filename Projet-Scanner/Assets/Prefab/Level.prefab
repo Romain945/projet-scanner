@@ -698,6 +698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GameOver: 210
   m_BlinkingLight: 70
+  m_HorrorChildSound: {fileID: 8300000, guid: 1a1386f86403b43458c29759d60f1515, type: 3}
 --- !u!1001 &410945376113712180
 PrefabInstance:
   m_ObjectHideFlags: 0
