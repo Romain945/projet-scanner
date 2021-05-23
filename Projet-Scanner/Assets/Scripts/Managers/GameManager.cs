@@ -129,6 +129,7 @@ public class GameManager : Manager<GameManager>
     {
         SetTimeScale(1);
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         EventManager.Instance.Raise(new GamePlayEvent());
         EventManager.Instance.Raise(new CallFadeOutAnimationPanelEvent());
     }
@@ -184,6 +185,7 @@ public class GameManager : Manager<GameManager>
     {
         SetTimeScale(0);
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         m_GameState = GameState.mainMenu;
         EventManager.Instance.Raise(new GameMenuEvent());
     }
@@ -197,6 +199,7 @@ public class GameManager : Manager<GameManager>
     {
         SetTimeScale(0);
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         m_GameState = GameState.pause;
         EventManager.Instance.Raise(new GamePauseEvent());
     }
@@ -205,6 +208,7 @@ public class GameManager : Manager<GameManager>
     {
         SetTimeScale(1);
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         m_GameState = GameState.play;
         EventManager.Instance.Raise(new GameResumeEvent());
     }
@@ -213,6 +217,7 @@ public class GameManager : Manager<GameManager>
     {
         SetTimeScale(0);
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         m_GameState = GameState.victory;
         EventManager.Instance.Raise(new GameVictoryEvent());
     }
@@ -221,6 +226,7 @@ public class GameManager : Manager<GameManager>
     {
         SetTimeScale(0);
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         m_GameState = GameState.gameOver;
         EventManager.Instance.Raise(new GameOverEvent());
     }
