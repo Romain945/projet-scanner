@@ -83,13 +83,13 @@ public class AudioManager : Manager<AudioManager>
     protected override void GamePause(GamePauseEvent e)
     {
         m_LevelMusic.Pause();
-        m_HorrorChildSound.Pause();
+        if(m_HorrorChildSound) m_HorrorChildSound.Pause();
     }
 
     protected override void GameResume(GameResumeEvent e)
     {
         m_LevelMusic.Play();
-        m_HorrorChildSound.Play();
+        if (m_HorrorChildSound) m_HorrorChildSound.Play();
     }
 
     protected override void GameOver(GameOverEvent e)
@@ -99,7 +99,6 @@ public class AudioManager : Manager<AudioManager>
 
     void CallFadeInAnimationPanel(CallFadeInAnimationPanelEvent e)
     {
-        m_HorrorChildSound.Stop();
         StartCoroutine(StartFadeOut(m_LevelMusic));
     }
     #endregion

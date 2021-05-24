@@ -30,6 +30,7 @@ public class Level : MonoBehaviour, IEventHandler
 
 	[Header("Sound")]
 	[SerializeField] AudioClip m_HorrorChildSound;
+	AudioSource m_HorrorChildSoundSource;
 	Vector3 m_HorrorChildPosition = new Vector3(-3.618f, -1.201f, 20.656f);
 
 	#region Events' subscription
@@ -43,10 +44,6 @@ public class Level : MonoBehaviour, IEventHandler
 		//Player
 		EventManager.Instance.RemoveListener<ObjectHasBeenDestroyEvent>(ObjectHasBeenDestroy);
 	}
-	void OnDestroy()
-	{
-		UnsubscribeEvents();
-	}
 	#endregion
 
 	void Awake()
@@ -59,12 +56,19 @@ public class Level : MonoBehaviour, IEventHandler
 		m_InitialPlayerIntensity = m_PlayerLight.intensity;
 	}
 
+	void OnDestroy()
+	{
+		UnsubscribeEvents();
+
+		if (m_HorrorChildSoundSource) Destroy(m_HorrorChildSoundSource.gameObject);
+	}
+
 	void Start()
 	{
-		AudioSource.PlayClipAtPoint(m_HorrorChildSound, m_HorrorChildPosition, 0.1f);
-		AudioSource horrorChild = GameObject.Find("One shot audio").GetComponent<AudioSource>();
-		horrorChild.loop = true;
-		EventManager.Instance.Raise(new GetAudioSourceHorrorChildEvent() { eHorrorChildAudioSource = horrorChild });
+		AudioSource.PlayClipAtPoint(m_HorrorChildSound, m_HorrorChildPosition, 0.25f);
+		m_HorrorChildSoundSource = GameObject.Find("One shot audio").GetComponent<AudioSource>();
+		m_HorrorChildSoundSource.loop = true;
+		EventManager.Instance.Raise(new GetAudioSourceHorrorChildEvent() { eHorrorChildAudioSource = m_HorrorChildSoundSource });
 	}
 
 	void ObjectHasBeenDestroy(ObjectHasBeenDestroyEvent e)
