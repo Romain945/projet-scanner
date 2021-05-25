@@ -18,7 +18,7 @@ public class GameManager : Manager<GameManager>
     }
     #endregion
 
-    #region Score & disc
+    #region Score
     int m_Score = 0;
     public int Score { get { return m_Score; } }
 
